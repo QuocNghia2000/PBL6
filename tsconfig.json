@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "jsx": "react-native",
+    "lib": ["es6"],
+    "esModuleInterop": true,
+    "moduleResolution": "node"
+  },
+  "typeAcquisition": {
+    "include": ["jest"]
+  },
+  "typeRoots": ["./src/types"]
+}

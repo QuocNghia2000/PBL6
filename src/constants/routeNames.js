@@ -1,0 +1,15 @@
+export const HOME_SCREEN = 'Home Screen';
+export const PRODUCT_DETAIL = 'PRODUCT_DETAIL';
+export const CREATE_CONTACT = 'CreateContact';
+export const SETTINGS = 'Settings';
+export const HOME_NAVIGATOR = 'Home';
+export const LOGIN = 'Login';
+export const REGISTER = 'Register';
+export const PERSONAL = 'Personal';
+export const CART = 'Cart';
+export const SPLASH = 'Splash';
+export const BOTTOM_NAVIGATOR = 'Bottom Navigator';
+export const SEARCH = 'SEARCH';
+export const AUTH_NAVIGATOR = 'Auth';
+export const SHOP_DETAIL = 'Shop Detail';
+export const CATEGORY_DETAIL = 'Category Detail';
