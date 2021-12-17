@@ -17,20 +17,10 @@ export default ({password, username}) =>
       })
       .then(response => {
         // handle success
-        console.log(
-          'dds',
-          JSON.parse(atob(response.data.split('.')[1])).cartId,
-        );
+        //console.log('dds', response.data);
 
         try {
-          AsyncStorage.setItem(
-            'token',
-            JSON.parse(atob(response.data.split('.')[1])).id,
-          );
-          AsyncStorage.setItem(
-            'cartID',
-            JSON.parse(atob(response.data.split('.')[1])).cartId,
-          );
+          AsyncStorage.setItem('token', response.data);
         } catch (e) {
           // saving error
         }
@@ -42,9 +32,12 @@ export default ({password, username}) =>
       })
       .catch(error => {
         // handle error
-        if (error !== null) {
-          console.log(error.response.data[0].error);
+        if (error.response !== null) {
+          console.log('response: ', error.response);
           dispatch({type: LOGIN_FAIL, payload: error.response.data[0].error});
+        } else if (error.request != null) {
+          console.log('request:', error.request);
+          dispatch({type: LOGIN_FAIL, payload: error.request});
         }
       });
   };

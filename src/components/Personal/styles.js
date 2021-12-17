@@ -22,6 +22,7 @@ export default StyleSheet.create({
   bgBtnSave: {
     paddingHorizontal: 15,
     marginTop: 30,
+    marginBottom: 15,
   },
   toolbar: {
     justifyContent: 'center',

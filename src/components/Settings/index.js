@@ -6,7 +6,7 @@ import {LOGIN, REGISTER} from '../../constants/routeNames';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SettingsComponent = ({isLoggedIn}) => {
-  console.log(isLoggedIn);
+  //console.log(isLoggedIn);
   const {navigate} = useNavigation();
 
   const btnLogin = () => {

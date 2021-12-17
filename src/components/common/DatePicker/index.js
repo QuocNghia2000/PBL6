@@ -19,7 +19,7 @@ const DatePicker = ({onChangeDate}) => {
       (tempDate.getMonth() + 1) +
       '  /  ' +
       tempDate.getFullYear();
-    console.log(parseDate);
+    //console.log(parseDate);
     onChangeDate(parseDate);
   };
 
@@ -38,25 +38,23 @@ const DatePicker = ({onChangeDate}) => {
 
   return (
     <View>
-      <View>
+      {/* <View>
         <Ionicons
           name="ios-calendar-outline"
           onPress={showDatepicker}
           style={{fontSize: 35}}></Ionicons>
-      </View>
+      </View> */}
       {/* <View>
         <Button onPress={showTimepicker} title="Show time picker!" />
       </View> */}
-      {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          //   mode={mode}
-          //   is24Hour={true}
-          display="spinner"
-          onChange={onChange}
-        />
-      )}
+      <DateTimePicker
+        testID="dateTimePicker"
+        value={date}
+        //   mode={mode}
+        //   is24Hour={true}
+        display="spinner"
+        onChange={onChange}
+      />
     </View>
   );
 };
