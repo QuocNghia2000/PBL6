@@ -15,16 +15,22 @@ import Feather from 'react-native-vector-icons/Feather';
 import {useNavigation} from '@react-navigation/native';
 import {SHOP_DETAIL} from '../../constants/routeNames';
 
-const ProductDetailComponent = ({productData, shopData}) => {
+const ProductDetailComponent = ({
+  productData,
+  shopData,
+  fbLoading,
+  fbData,
+  loading,
+}) => {
   const navigation = useNavigation();
 
-  const [loading, setLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    setTimeout(async () => {
-      setLoading(false);
-    }, 1000);
-  }, []);
+  const getAverageRate = () => {
+    let rate = 0;
+    fbData.forEach(element => {
+      rate += parseInt(element.rate);
+    });
+    return rate;
+  };
   return (
     <View>
       <StatusBar translucent backgroundColor="transparent" />
@@ -41,8 +47,8 @@ const ProductDetailComponent = ({productData, shopData}) => {
         <Text style={styles.txtPrice}>
           {convertPrice(productData.price.toString())} đ
         </Text>
-        <View>
-          <Text style={styles.txtTitleDes}>Mô tả Sản phẩm</Text>
+        <View style={{marginLeft: 15}}>
+          <Text style={styles.txtTitleDes}>Mô tả sản phẩm:</Text>
           <Text style={styles.txtDes}>{productData.description}</Text>
           <Text style={styles.txtTitleDes}>
             Số lượng còn lại: {productData.quantity}
@@ -86,25 +92,69 @@ const ProductDetailComponent = ({productData, shopData}) => {
             </TouchableOpacity>
           </View>
         )}
-        <Text style={styles.txtTitleDes}>
-          Số lượng còn lại: {productData.quantity}
-        </Text>
-        <View>
-          <Text style={styles.txtTitleDes}>Đánh giá Sản phẩm</Text>
-          <Text style={styles.txtDes}>Lượt thích: 5555</Text>
-          <Text style={styles.txtDes}>Lượt bình luận: 1000</Text>
+        {fbLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <View>
+            <View>
+              <View style={styles.txtTitleContainer}>
+                <Text style={styles.txtTitleDes}>
+                  Đánh giá sản phẩm {getAverageRate().count}
+                </Text>
+                {Array(parseInt(getAverageRate() / 2))
+                  ?.fill(1)
+                  .map((rates, is) => (
+                    <Ionicons
+                      key={is}
+                      name="md-star-sharp"
+                      style={[
+                        styles.userIcon,
+                        {color: '#ff8d1c', marginLeft: 5},
+                      ]}
+                    />
+                  ))}
+                {getAverageRate() % 2 > 0 && (
+                  <Ionicons
+                    name="star-half-sharp"
+                    style={[styles.userIcon, {color: '#ff8d1c', marginLeft: 5}]}
+                  />
+                )}
+              </View>
 
-          <Text style={styles.txtDes}>
-            Cá hồi nhập trực tiếp từ NAUY với chất lượng được kiểm soát nghiêm
-            ngặt. Sở hữu thịt thơm ngon và giàu dinh dưỡng, thích hợp cho mọi
-            đối tượng sử dụng. Thịt cá hồi vừa ngon, vừa không sợ béo,...
-          </Text>
-          <Text style={styles.txtDes}>
-            Cá hồi nhập trực tiếp từ NAUY với chất lượng được kiểm soát nghiêm
-            ngặt. Sở hữu thịt thơm ngon và giàu dinh dưỡng, thích hợp cho mọi
-            đối tượng sử dụng. Thịt cá hồi vừa ngon, vừa không sợ béo,...
-          </Text>
-        </View>
+              <Text style={styles.txtDes}>Lượt đánh giá: {fbData.length}</Text>
+              {!loading &&
+                fbData?.map((item, index) => (
+                  <View key={index} style={styles.bgItemFb}>
+                    <Ionicons
+                      name="ios-person-circle"
+                      style={styles.userIcon}
+                    />
+                    <View style={styles.containerFb}>
+                      <Text style={styles.textName}>{item?.user.username}</Text>
+                      <View
+                        style={{flexDirection: 'row', alignContent: 'center'}}>
+                        {Array(parseInt(item?.rate))
+                          .fill(1)
+                          .map((rate, i) => (
+                            <Ionicons
+                              key={i}
+                              name="md-star-sharp"
+                              style={[
+                                styles.userIcon,
+                                {color: '#ff8d1c', marginLeft: 5},
+                              ]}
+                            />
+                          ))}
+                      </View>
+                      <Text style={[styles.textName, {color: 'black'}]}>
+                        {item?.comment}
+                      </Text>
+                    </View>
+                  </View>
+                ))}
+            </View>
+          </View>
+        )}
       </ScrollView>
     </View>
   );

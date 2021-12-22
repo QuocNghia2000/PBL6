@@ -1,8 +1,6 @@
 import {StyleSheet, Dimensions} from 'react-native';
 import colors from '../../assets/theme/colors';
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 export default StyleSheet.create({
   toolbar: {
     justifyContent: 'center',
@@ -13,31 +11,21 @@ export default StyleSheet.create({
     borderBottomWidth: 0.5,
     borderBottomColor: colors.primary,
   },
-  container: {flex: 1},
+  container: {height: '100%'},
   back: {
     marginLeft: 10,
     position: 'absolute',
     left: 10,
-  },
-  checkboxAll: {
-    marginLeft: 10,
-  },
-  checkbox: {
-    alignSelf: 'center',
-  },
-  checkboxContainer: {
-    flexDirection: 'row',
-    marginBottom: 20,
   },
   txtTitle: {
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 20,
   },
-  positionCenter: {
-    alignItems: 'center',
-    height: Dimensions.get('window').height,
-    justifyContent: 'center',
+  addressContainer: {
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: 'gray',
   },
   bgItemProduct: {
     flexDirection: 'row',
@@ -58,11 +46,11 @@ export default StyleSheet.create({
   },
   bgRight: {
     marginLeft: 15,
-    width: 150,
+    width: 250,
   },
   textPrice: {
     color: colors.red,
-    marginTop: 40,
+    marginTop: 10,
     fontSize: 16,
   },
   btnBuy: {
@@ -72,21 +60,26 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.red,
     position: 'absolute',
-    right: 10,
     bottom: 10,
+    right: 20,
   },
   textBuy: {
     fontSize: 15,
     color: colors.white,
     fontWeight: 'bold',
   },
-  containerAll: {
+  iconAddress: {
+    padding: 15,
+  },
+  containerPrice: {
+    flexDirection: 'row',
+    marginTop: 15,
+  },
+  txtPrice: {
     position: 'absolute',
-    height: 60,
-    left: 0,
-    justifyContent: 'center',
-    bottom: 10,
-    width: windowWidth,
-    backgroundColor: '#dadada',
+    right: 20,
+  },
+  txtTitlePrice: {
+    marginLeft: 20,
   },
 });

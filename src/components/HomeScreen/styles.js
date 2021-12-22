@@ -104,6 +104,8 @@ export default StyleSheet.create({
   cartIcon: {
     fontSize: 30,
     color: colors.darkgray,
+  },
+  cartIconContainer: {
     position: 'absolute',
     right: 50,
     top: 20,

@@ -18,22 +18,30 @@ const PersonalComponent = ({data, loading, onSubmit, onChange}) => {
   const [isShowDatePicker, setShowDatePicker] = React.useState(false);
   const [isShowGender, setShowGender] = React.useState(false);
 
-  const onChangeDate = txt => {
-    setDate(txt);
+  const onChangeDate = (Date, txtDate) => {
+    setDate(txtDate);
     setShowDatePicker(!isShowDatePicker);
-    onChange({name: 'birthday', value: txt});
+    onChange({name: 'birthday', value: Date});
   };
   const onShowGenderModal = () => {
     setShowGender(!isShowGender);
   };
-  const onChangeGender = () => {
-    setGender(data.gender);
-    return gender;
-  };
+
   const onSaveGender = sex => {
     setShowGender(!isShowGender);
     setGender(sex);
     onChange({name: 'gender', value: sex});
+  };
+
+  const parseDate = date => {
+    let temp = new Date(date);
+    return (
+      temp.getDate() +
+      '  /  ' +
+      (temp.getMonth() + 1) +
+      '  /  ' +
+      temp.getFullYear()
+    );
   };
 
   const onPressDate = () => {
@@ -100,7 +108,7 @@ const PersonalComponent = ({data, loading, onSubmit, onChange}) => {
 
           <PersonalText
             label="Ngày sinh"
-            value={date}
+            value={parseDate(data.birthday)}
             enable
             onPress={onPressDate}
             editable={false}

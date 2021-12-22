@@ -29,10 +29,13 @@ export default StyleSheet.create({
   txtTitleDes: {
     fontSize: 18,
     color: 'black',
+  },
+  txtTitleContainer: {
     paddingVertical: 10,
     paddingHorizontal: space,
     borderBottomWidth: 0.7,
     borderColor: colors.darkgrey,
+    flexDirection: 'row',
   },
   txtDes: {
     paddingHorizontal: space,
@@ -71,5 +74,19 @@ export default StyleSheet.create({
     borderColor: 'red',
     borderWidth: 1,
     padding: 5,
+  },
+  bgItemFb: {
+    flexDirection: 'row',
+    alignContent: 'center',
+    margin: 10,
+  },
+  userIcon: {
+    fontSize: 25,
+  },
+  textName: {
+    fontSize: 15,
+  },
+  containerFb: {
+    marginLeft: 10,
   },
 });

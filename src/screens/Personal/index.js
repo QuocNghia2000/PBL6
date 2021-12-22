@@ -55,19 +55,18 @@ const Personal = () => {
   const {
     personalDispatch,
     personalState: {
-      getInfo: {data, loading},
+      getInfo: {dataInfo, loading},
     },
   } = useContext(GlobalContext);
-  useEffect(() => {
-    getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  //console.log('abc: ', AsyncStorage.getItem('token'));
+  // useEffect(() => {
+  //   getData();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <GlobalProvider>
       <PersonalComponent
-        data={data}
+        data={dataInfo}
         loading={loading}
         onChange={onChange}
         onSubmit={updateInfo}

@@ -1,6 +1,6 @@
 export default {
   getInfo: {
-    data: {},
+    dataInfo: {},
     error: null,
     loading: false,
   },

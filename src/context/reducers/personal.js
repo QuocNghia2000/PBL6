@@ -20,7 +20,7 @@ const personal = (state, {type, payload}) => {
         getInfo: {
           ...state.getInfo,
           loading: false,
-          data: payload,
+          dataInfo: payload,
         },
       };
     case GET_INFO_FAIL:

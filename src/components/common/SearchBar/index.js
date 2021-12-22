@@ -3,7 +3,7 @@ import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import colors from '../../../assets/theme/colors';
 
-const SearchBar = ({onPress, goBack, style}) => {
+const SearchBar = ({onPress, goBack, style, onChangeText}) => {
   return (
     <View style={[styles.bgToolbarSearch, style]}>
       {goBack && (
@@ -15,6 +15,9 @@ const SearchBar = ({onPress, goBack, style}) => {
           placeholder="SeaFood"
           style={styles.txtSearch}
           onFocus={onPress}
+          onChangeText={value => {
+            onChangeText(value);
+          }}
         />
       </TouchableOpacity>
     </View>

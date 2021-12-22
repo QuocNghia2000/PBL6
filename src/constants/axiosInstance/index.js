@@ -8,9 +8,9 @@ const instance = axios.create({
 });
 const getData = async () => {
   const token = await AsyncStorage.getItem('token');
-  console.log('token: ', token);
-  if (token !== null) {
-    instance.defaults.headers.common['Authorization'] =
+  //console.log('token: ', token);
+  if (token != null) {
+    instance.defaults.headers.common.Authorization =
       'Bearer ' + AsyncStorage.getItem('token');
   }
 };

@@ -1,25 +1,17 @@
-import {
-  ADD_CART_LOADING,
-  ADD_CART_FAIL,
-  ADD_CART_SUCCESS,
-} from './../../../constants/actionTypes/index';
-
 import axios from '../../../constants/axiosInstance/index';
 
-export default (cartID, productID, quantity) => {
+export default (cartItemID, quantity) => {
   // dispatch({
   //   type: ADD_CART_LOADING,
   // });
-  console.log('có vô add', cartID + '/' + productID + ':/' + quantity);
+  console.log('có vô add', cartItemID + ':/' + quantity);
   axios
-    .post('/cart/item/add', {
-      cartId: cartID,
-      productId: productID,
+    .put('/cart/item/' + cartItemID, {
       quantity: parseInt(quantity),
     })
     .then(response => {
       // handle success
-      console.log('responseAddcart:', response);
+      console.log('responseUpdatecart:', response.data);
       // dispatch({type: ADD_CART_SUCCESS, payload: response.data});
     })
     .catch(error => {

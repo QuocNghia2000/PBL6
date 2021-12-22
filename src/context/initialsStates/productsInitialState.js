@@ -14,4 +14,19 @@ export default {
     error: null,
     cartLoading: false,
   },
+  getFeedback: {
+    fbData: [],
+    error: null,
+    fbLoading: false,
+  },
+  getShopDetail: {
+    data: [],
+    error: null,
+    loading: false,
+  },
+  postOrder: {
+    data: {},
+    error: null,
+    loading: false,
+  },
 };

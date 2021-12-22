@@ -8,7 +8,6 @@ import {LOGIN} from './../../constants/routeNames';
 const Register = () => {
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
-  const [response, setResponse] = useState(false);
   const navigate = useNavigation();
 
   const validateEmail = email => {
@@ -25,7 +24,7 @@ const Register = () => {
       });
     }
   };
-  const submitRegister = form => {
+  const submitRegister = () => {
     //console.log('info: ', form.username);
     axios
       .post('/user/register/', {
@@ -38,7 +37,6 @@ const Register = () => {
       .then(response => {
         // handle success
         console.log('status: ', response.data);
-        setResponse(true);
         ToastAndroid.show('Register Success', ToastAndroid.SHORT);
         navigate.replace(LOGIN);
       })
@@ -123,7 +121,7 @@ const Register = () => {
   const onSubmit = () => {
     // console.log('looix', form);
     if (cacthError()) {
-      submitRegister(form);
+      submitRegister();
     }
   };
   // React.useEffect(() => {

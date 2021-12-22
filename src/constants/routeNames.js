@@ -13,3 +13,4 @@ export const SEARCH = 'SEARCH';
 export const AUTH_NAVIGATOR = 'Auth';
 export const SHOP_DETAIL = 'Shop Detail';
 export const CATEGORY_DETAIL = 'Category Detail';
+export const ORDER = 'Thanh toán';

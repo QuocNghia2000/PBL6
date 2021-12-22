@@ -9,6 +9,7 @@ import {
   REGISTER,
   SHOP_DETAIL,
   CATEGORY_DETAIL,
+  ORDER,
 } from '../constants/routeNames';
 import SplashScreen from './../screens/Splash/index';
 import BottomNavigator from './BottomNavigator';
@@ -18,6 +19,7 @@ import Login from './../screens/Login/index';
 import Register from './../screens/Register/index';
 import ShopDetail from './../screens/ShopDetail/index';
 import CategoryDetail from './../screens/CategoryDetail/index';
+import OrderScreen from './../screens/Order/index';
 
 const SplashNavigator = () => {
   const SplashStack = createNativeStackNavigator();
@@ -35,6 +37,7 @@ const SplashNavigator = () => {
       <SplashStack.Screen name={REGISTER} component={Register} />
       <SplashStack.Screen name={SHOP_DETAIL} component={ShopDetail} />
       <SplashStack.Screen name={CATEGORY_DETAIL} component={CategoryDetail} />
+      <SplashStack.Screen name={ORDER} component={OrderScreen} />
     </SplashStack.Navigator>
   );
 };

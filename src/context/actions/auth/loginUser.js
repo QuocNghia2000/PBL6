@@ -21,6 +21,10 @@ export default ({password, username}) =>
 
         try {
           AsyncStorage.setItem('token', response.data);
+          AsyncStorage.setItem(
+            'cartID',
+            JSON.parse(atob(response.data.split('.')[1])).cartId,
+          );
         } catch (e) {
           // saving error
         }

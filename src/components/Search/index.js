@@ -17,17 +17,28 @@ import {GlobalContext} from './../../context/Provider';
 import getProducts from '../../context/actions/home/getProductList';
 import convertPrice from './../../constants/Reused/index';
 
-const SearchComponent = () => {
-  const {
-    productsDispatch,
-    productsState: {
-      getProducts: {data, loading},
-    },
-  } = useContext(GlobalContext);
-  useEffect(() => {
-    getProducts()(productsDispatch);
-  }, [productsDispatch]);
+const SearchComponent = ({data}) => {
+  // console.log(data);
+  const [dataFiltered, setDataFiltered] = React.useState({
+    data: data,
+    backup: data,
+  });
   const navigation = useNavigation();
+
+  const search = txt => {
+    let text = txt.toLowerCase();
+    let tracks = dataFiltered.backup;
+    let filterTracks = tracks?.filter(item => {
+      if (item.name.toLowerCase().match(text)) {
+        return item;
+      }
+    });
+
+    if (txt === '' || txt == null) {
+      setDataFiltered({...dataFiltered, data: dataFiltered.backup});
+    }
+    setDataFiltered({...dataFiltered, data: filterTracks});
+  };
 
   const ListEmptyComponent = () => {
     return (
@@ -67,8 +78,8 @@ const SearchComponent = () => {
   return (
     <View style>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
-      <SearchBar goBack={goBack} />
-      {loading && (
+      <SearchBar goBack={goBack} onChangeText={search} />
+      {/* {loading && (
         <View>
           <ActivityIndicator
             style={styles.positionCenter}
@@ -76,18 +87,16 @@ const SearchComponent = () => {
             color="grey"
           />
         </View>
-      )}
-      {!loading && (
-        <FlatList
-          renderItem={renderItem}
-          keyExtractor={(item, index) => {
-            return index.toString();
-          }}
-          data={data}
-          ListEmptyComponent={ListEmptyComponent}
-          // horizontal={true}
-        />
-      )}
+      )} */}
+      <FlatList
+        renderItem={renderItem}
+        keyExtractor={(item, index) => {
+          return index.toString();
+        }}
+        data={dataFiltered.data}
+        ListEmptyComponent={ListEmptyComponent}
+        // horizontal={true}
+      />
     </View>
   );
 };

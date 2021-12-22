@@ -13,14 +13,14 @@ const DatePicker = ({onChangeDate}) => {
     setShow(Platform.OS === 'ios');
     setDate(currentDate);
     let tempDate = new Date(currentDate);
-    let parseDate =
+    const parseDate =
       tempDate.getDate() +
       '  /  ' +
       (tempDate.getMonth() + 1) +
       '  /  ' +
       tempDate.getFullYear();
-    //console.log(parseDate);
-    onChangeDate(parseDate);
+    console.log(tempDate);
+    onChangeDate(tempDate, parseDate);
   };
 
   const showMode = currentMode => {

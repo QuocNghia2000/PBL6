@@ -20,6 +20,10 @@ import SearchBar from './../../components/common/SearchBar/index';
 import convertPrice from '../../constants/Reused/index';
 import CustomFlatList from './../common/FlatList/index';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {
+  ADD_TO_CART,
+  UPDATE_CART_QTY,
+} from './../../constants/actionTypes/index';
 
 const HomeScreenComponent = ({
   data,
@@ -27,19 +31,25 @@ const HomeScreenComponent = ({
   dataCategorites,
   loadingCategorites,
   shopData,
+  productsDispatch,
+  cartData,
+  addCart,
+  updateItemInCart,
 }) => {
   //console.log('data: ', data);
-  const {navigate} = useNavigation();
   const navigation = useNavigation();
-  const ListEmptyComponent = () => {
-    return (
-      <View style={styles.positionCenter}>
-        <Text>No items to show</Text>
-      </View>
-    );
-  };
+
+  // const ListEmptyComponent = () => {
+  //   return (
+  //     <View style={styles.positionCenter}>
+  //       <Text>No items to show</Text>
+  //     </View>
+  //   );
+  // };
   const gotoSearchScreen = () => {
-    navigate(SEARCH);
+    navigation.navigate(SEARCH, {
+      data: data,
+    });
   };
   const renderItemShop = ({item}) => {
     //console.log('item :>>', item.name);
@@ -153,13 +163,36 @@ const HomeScreenComponent = ({
                   {convertPrice(item.price.toString())} đ
                 </Text>
               </View>
-              <FontAwesome5
-                name="cart-plus"
-                style={styles.cartIcon}
-                onPress={() => {
-                  alert('ok');
-                }}
-              />
+              <TouchableOpacity style={styles.cartIconContainer}>
+                <FontAwesome5
+                  name="cart-plus"
+                  style={styles.cartIcon}
+                  onPress={() => {
+                    const existItem = cartData.filter(
+                      p => p.product._id === item._id,
+                    );
+                    console.log('existItem:', existItem.length);
+                    if (existItem.length > 0) {
+                      productsDispatch({
+                        type: UPDATE_CART_QTY,
+                        payload: {
+                          id: existItem[0].product._id,
+                          qty: ++existItem[0].quantity,
+                        },
+                      });
+                      updateItemInCart(existItem[0]._id, existItem[0].quantity);
+                    } else {
+                      productsDispatch({
+                        type: ADD_TO_CART,
+                        payload: item,
+                      });
+                      console.log('itemadd:', item);
+                      addCart(item._id, '1');
+                    }
+                  }}
+                />
+              </TouchableOpacity>
+
               <TouchableOpacity style={styles.btnBuy}>
                 <Text style={styles.textBuy}>Mua ngay</Text>
               </TouchableOpacity>
