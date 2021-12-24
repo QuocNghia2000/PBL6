@@ -39,6 +39,7 @@ const HomeScreen = () => {
   } = useContext(GlobalContext);
 
   const getCartAndInfo = () => {
+    console.log('id:', id);
     if (cartId !== null && id !== null) {
       setLoggedIn(true);
       getInfo(id)(personalDispatch);

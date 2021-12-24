@@ -193,10 +193,8 @@ const HomeScreenComponent = ({
                         type: ADD_TO_CART,
                         payload: item,
                       });
-                      cartData.forEach(element => {
-                        console.log('cartID:', element.product.name);
-                      });
                       if (isLogged) {
+                        console.log('add server');
                         addCart(item._id, '1');
                       } else {
                         ToastAndroid.show(

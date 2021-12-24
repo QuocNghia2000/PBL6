@@ -52,9 +52,9 @@ const ProductDetailComponent = ({
         <View style={{marginLeft: 15}}>
           <Text style={styles.txtTitleDes}>Mô tả sản phẩm:</Text>
           <Text style={styles.txtDes}>{productData.description}</Text>
-          <Text style={styles.txtTitleDes}>
+          {/* <Text style={styles.txtQty}>
             Số lượng còn lại: {productData.quantity}
-          </Text>
+          </Text> */}
         </View>
         {loading && (
           <View style={styles.bgShop}>

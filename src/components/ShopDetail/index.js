@@ -10,10 +10,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import styles from './styles';
-import SearchBar from './../common/SearchBar/index';
 import convertPrice from './../../constants/Reused/index';
 import {useNavigation} from '@react-navigation/native';
-import {PRODUCT_DETAIL, SEARCH} from './../../constants/routeNames';
+import {PRODUCT_DETAIL} from './../../constants/routeNames';
 
 const ShopDetailComponent = ({shopData, productData}) => {
   // console.log('shop: ', data);
@@ -83,7 +82,8 @@ const ShopDetailComponent = ({shopData, productData}) => {
             source={{
               uri: shopData.image,
             }}
-            style={styles.imageLogo}></Image>
+            style={styles.imageLogo}
+          />
           <Text style={styles.txtNameShop}>{shopData.name}</Text>
         </View>
       </ImageBackground>

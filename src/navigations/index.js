@@ -15,7 +15,10 @@ const AppNavigation = () => {
       background: 'white',
     },
   };
-  const {authDispatch} = useContext(GlobalContext);
+  const {
+    authDispatch,
+    authState: {id},
+  } = useContext(GlobalContext);
   const {
     productsDispatch,
     productsState: {
@@ -24,22 +27,20 @@ const AppNavigation = () => {
   } = useContext(GlobalContext);
   const appState = React.useRef(AppState.currentState);
 
-  const saveCartToStorage = () => {
-    cartData.forEach(element => {
-      console.log('home:', element.product.name);
-    });
-    console.log('item in carrt: ', cartData);
-    AsyncStorage.setItem('cartData', JSON.stringify(cartData));
-  };
   const getInfoUserFromToken = async () => {
     const cartID = await AsyncStorage.getItem('cartID');
     const token = await AsyncStorage.getItem('token');
     const cartDATA = await AsyncStorage.getItem('cartData');
     if (cartID !== null && token !== null) {
-      const id = JSON.parse(atob(token.toString().split('.')[1])).id;
-      authDispatch({type: GET_TOKEN, payload: {id: id, cartId: cartID}});
-    } else if (cartDATA !== null) {
-      console.log('item in carrt: ', JSON.parse(cartDATA));
+      AsyncStorage.removeItem('cartData');
+      const userid = JSON.parse(atob(token.toString().split('.')[1])).id;
+      console.log('id', cartID + ':::' + userid);
+      authDispatch({type: GET_TOKEN, payload: {id: userid, cartId: cartID}});
+    } else if (cartDATA !== null && id === null) {
+      console.log('k có tài khoản');
+      JSON.parse(cartDATA).forEach(element => {
+        console.log('item in carrtIN: ', element.product.name);
+      });
       productsDispatch({type: GET_CART_SUCCESS, payload: JSON.parse(cartDATA)});
     }
   };
@@ -55,16 +56,18 @@ const AppNavigation = () => {
       console.log('AppState', appState.current);
       if (appState.current.match(/inactive|background/)) {
         console.log('App has come to the foreground!');
-        console.log('item in carrt: ', cartData);
-        AsyncStorage.setItem('cartData', JSON.stringify(cartData));
-        //saveCartToStorage();
+        cartData.forEach(element => {
+          console.log('item in carrtOUT: ', element.product.name);
+        });
+        if (id === null) {
+          AsyncStorage.setItem('cartData', JSON.stringify(cartData));
+        }
       }
     });
     return () => {
       subscription.remove();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [cartData, id]);
 
   return (
     <NavigationContainer theme={MyTheme}>

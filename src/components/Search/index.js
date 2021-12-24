@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
-// import {PRODUCT_DETAIL} from './../../constants/routeNames';
+import {PRODUCT_DETAIL} from './../../constants/routeNames';
 import SearchBar from './../../components/common/SearchBar/index';
 import convertPrice from './../../constants/Reused/index';
 
@@ -56,7 +56,9 @@ const SearchComponent = ({data}) => {
       <TouchableOpacity
         style={styles.bgItemProduct}
         onPress={() => {
-          //navigation.navigate(PRODUCT_DETAIL);
+          navigation.navigate(PRODUCT_DETAIL, {
+            data: item,
+          });
         }}>
         {image && <Image source={{uri: image}} style={styles.itemImage} />}
 

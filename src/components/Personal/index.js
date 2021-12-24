@@ -11,6 +11,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Button from './../common/Button/index';
 
 const PersonalComponent = ({data, loading, onSubmit, onChange, isLoggedIn}) => {
+  const parseDate = date => {
+    let temp = new Date(date);
+    return (
+      temp.getDate() +
+      '  /  ' +
+      (temp.getMonth() + 1) +
+      '  /  ' +
+      temp.getFullYear()
+    );
+  };
   const [date, setDate] = React.useState(
     data.birthday ? parseDate(data.birthday) : 'Chọn ngày sinh',
   );
@@ -46,17 +56,6 @@ const PersonalComponent = ({data, loading, onSubmit, onChange, isLoggedIn}) => {
     navigate(LOGIN);
     AsyncStorage.removeItem('token');
     AsyncStorage.removeItem('cartID');
-  };
-
-  const parseDate = date => {
-    let temp = new Date(date);
-    return (
-      temp.getDate() +
-      '  /  ' +
-      (temp.getMonth() + 1) +
-      '  /  ' +
-      temp.getFullYear()
-    );
   };
 
   const onPressDate = () => {

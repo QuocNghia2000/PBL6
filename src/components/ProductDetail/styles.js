@@ -30,6 +30,7 @@ export default StyleSheet.create({
     fontSize: 18,
     color: 'black',
   },
+  txtQty: {fontSize: 18, color: 'black', margin: 10},
   txtTitleContainer: {
     paddingVertical: 10,
     paddingHorizontal: space,
@@ -41,8 +42,6 @@ export default StyleSheet.create({
     paddingHorizontal: space,
     paddingVertical: 10,
     fontSize: 17,
-    borderBottomWidth: 0.7,
-    borderColor: colors.darkgrey,
   },
   bgNameShop: {
     marginLeft: 15,

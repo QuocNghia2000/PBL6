@@ -49,9 +49,11 @@ const Login = () => {
     }
     if (form.username && form.password) {
       loginUser(form)(authDispatch);
-      if (id !== null) {
-        navigate(SPLASH);
-      }
+      setTimeout(() => {
+        if (id !== null) {
+          navigate(SPLASH);
+        }
+      }, 2000);
     }
   };
   return (

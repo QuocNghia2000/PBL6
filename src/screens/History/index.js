@@ -17,6 +17,7 @@ const History = () => {
   } = React.useContext(GlobalContext);
 
   React.useEffect(() => {
+    console.log('ID:', dataInfo._id);
     navigation.addListener('focus', () => {
       getOrders('Pending', dataInfo._id)(orderDispatch);
     });
