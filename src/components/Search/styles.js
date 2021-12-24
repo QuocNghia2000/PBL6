@@ -47,4 +47,7 @@ export default StyleSheet.create({
     color: colors.white,
     fontWeight: 'bold',
   },
+  container: {
+    flex: 1,
+  },
 });

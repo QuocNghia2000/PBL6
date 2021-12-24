@@ -2,15 +2,15 @@ import React from 'react';
 import {ToastAndroid} from 'react-native';
 import OrderComponent from './../../components/Order/index';
 import {GlobalContext} from './../../context/Provider';
-import addOrder from '../../context/actions/order/addOrder';
 import addOrderDetail from '../../context/actions/order/addOrderDetail';
 import {REMOVE_FROM_CART} from './../../constants/actionTypes/index';
 import {useNavigation} from '@react-navigation/native';
-import {BOTTOM_NAVIGATOR} from '../../constants/routeNames';
+import axios from '../../constants/axiosInstance/index';
 
 const OrderScreen = ({route}) => {
   const navigate = useNavigation();
   const itemData = route.params.data;
+  const [loading, setLoading] = React.useState(false);
   const {
     personalState: {
       getInfo: {dataInfo},
@@ -18,9 +18,7 @@ const OrderScreen = ({route}) => {
   } = React.useContext(GlobalContext);
   const {
     productsDispatch,
-    productsState: {
-      postOrder: {data, loading},
-    },
+    productsState: {},
   } = React.useContext(GlobalContext);
 
   const removeItemFromCart = product => {
@@ -30,28 +28,59 @@ const OrderScreen = ({route}) => {
     });
   };
 
-  const postOrder = total => {
-    addOrder(dataInfo._id, total, dataInfo.address)(productsDispatch);
-    if (data !== null) {
-      console.log('orderID: ', data._id);
-      itemData.forEach(element => {
-        console.log('elêmnt: ', element);
-        addOrderDetail(
-          dataInfo._id,
-          element.product._id,
-          element.product.price,
-          element.quantity,
-        )(productsDispatch);
-        removeItemFromCart(element.product);
+  const addOrder = (userId, total, address) => {
+    setLoading(true);
+    axios
+      .post('/order/add', {
+        userId: userId,
+        total: total,
+        shipperName: 'Mai Dũng',
+        shipperPhone: '0458937856',
+        address: address,
+      })
+
+      .then(response => {
+        // handle success
+        console.log('resAddOrder: ', response.data._id);
+        if (response.data._id !== null) {
+          itemData.forEach(element => {
+            console.log('elêmnt: ', element.product);
+            addOrderDetail(
+              response.data._id,
+              element.product._id,
+              element.product.price,
+              element.quantity,
+            )(productsDispatch);
+            removeItemInCart(element._id);
+            removeItemFromCart(element.product);
+          });
+          setLoading(false);
+          ToastAndroid.show('Đặt đơn hàng thành công!', ToastAndroid.SHORT);
+          navigate.goBack();
+        }
+      })
+      .catch(error => {
+        // handle errornse);
       });
-      ToastAndroid.show('Đặt đơn hàng thành công!', ToastAndroid.SHORT);
-      navigate.goBack();
-    }
   };
-  // itemData.forEach(element => {
-  //   console.log('elêmnt: ', element);
-  //   //addOrderDetail(data._id, element._id, price, quantity)(productsDispatch);
-  // });
+  const removeItemInCart = id => {
+    axios
+      .delete('/cart/item/' + id)
+      .then(response => {
+        // handle success
+        console.log('responseRemove:', response.data.msg);
+        // dispatch({type: ADD_CART_SUCCESS, payload: response.data});
+      })
+      .catch(error => {
+        // handle errornse);
+        // dispatch({type: ADD_CART_FAIL, payload: error.response.data});
+      });
+  };
+
+  const postOrder = total => {
+    // console.log('idUser:', dataInfo.address);
+    addOrder(dataInfo._id, total, dataInfo.address);
+  };
 
   return (
     <OrderComponent

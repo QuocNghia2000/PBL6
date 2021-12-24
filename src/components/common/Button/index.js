@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 import colors from '../../../assets/theme/colors';
 
 const Button = ({title, loginColor, signupColor, onPress}) => {

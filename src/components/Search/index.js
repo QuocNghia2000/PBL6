@@ -5,16 +5,13 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
-  ActivityIndicator,
+  // ActivityIndicator,
   StatusBar,
 } from 'react-native';
-import {useContext, useEffect} from 'react';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
-import {PRODUCT_DETAIL, SEARCH} from './../../constants/routeNames';
+// import {PRODUCT_DETAIL} from './../../constants/routeNames';
 import SearchBar from './../../components/common/SearchBar/index';
-import {GlobalContext} from './../../context/Provider';
-import getProducts from '../../context/actions/home/getProductList';
 import convertPrice from './../../constants/Reused/index';
 
 const SearchComponent = ({data}) => {
@@ -76,7 +73,7 @@ const SearchComponent = ({data}) => {
     );
   };
   return (
-    <View style>
+    <View style={styles.container}>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
       <SearchBar goBack={goBack} onChangeText={search} />
       {/* {loading && (

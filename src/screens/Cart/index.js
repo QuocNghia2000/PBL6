@@ -1,20 +1,20 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import CartComponent from './../../components/Cart/index';
 import {GlobalContext} from './../../context/Provider';
-import getCart from '../../context/actions/home/getCartList';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from '../../constants/axiosInstance/index';
 import {ToastAndroid} from 'react-native';
 import updateItemCart from '../../context/actions/home/updateItemCart';
 
 const Cart = () => {
-  const getCartID = async () => {
-    const cartID = await AsyncStorage.getItem('cartID');
-    if (cartID !== null) {
-      //console.log('carrtID:', cartID);
-      getCart(cartID)(productsDispatch);
-    }
-  };
+  const {
+    productsDispatch,
+    productsState: {
+      getCart: {cartData, cartLoading},
+    },
+  } = useContext(GlobalContext);
+  const {
+    authState: {id},
+  } = useContext(GlobalContext);
 
   const removeItemInCart = id => {
     console.log('id', id);
@@ -37,17 +37,6 @@ const Cart = () => {
     updateItemCart(cartItemID, quantity);
   };
 
-  const {
-    productsDispatch,
-    productsState: {
-      getCart: {cartData, cartLoading},
-    },
-  } = useContext(GlobalContext);
-  // useEffect(() => {
-  //   getCartID();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-  // console.log('cart: ', cartData);
   return (
     <CartComponent
       cartData={cartData}
@@ -55,6 +44,7 @@ const Cart = () => {
       productsDispatch={productsDispatch}
       removeItemInCart={removeItemInCart}
       updateItemInCart={updateItemInCart}
+      isLogged={id}
     />
   );
 };

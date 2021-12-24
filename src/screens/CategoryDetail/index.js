@@ -1,7 +1,5 @@
 import React from 'react';
 import CategoryDetailComponent from './../../components/CategoryDetail/index';
-import {GlobalContext} from './../../context/Provider';
-import getProductsByCategoryID from '../../context/actions/category/getProductByCategoryID';
 import axios from '../../constants/axiosInstance/index';
 const CategoryDetail = ({route}) => {
   const id = route.params.data._id;

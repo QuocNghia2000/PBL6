@@ -42,4 +42,12 @@ export default StyleSheet.create({
   positionCenter: {
     height: Dimensions.get('window').height,
   },
+  bg: {
+    flexDirection: 'row',
+    position: 'absolute',
+    right: 20,
+  },
+  bgBtn: {
+    height: 60,
+  },
 });

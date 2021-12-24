@@ -6,7 +6,7 @@ import CustomeButton from './../../components/common/CustomButton/index';
 import styles from './styles';
 import logoImage from '../../assets/images/logo.png';
 import iconGoogle from '../../assets/images/icon_google.png';
-import {REGISTER, SPLASH} from './../../constants/routeNames';
+import {REGISTER} from './../../constants/routeNames';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 //user:abc123555@gmail.com pass:1231232

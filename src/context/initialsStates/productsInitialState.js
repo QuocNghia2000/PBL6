@@ -24,9 +24,4 @@ export default {
     error: null,
     loading: false,
   },
-  postOrder: {
-    data: {},
-    error: null,
-    loading: false,
-  },
 };

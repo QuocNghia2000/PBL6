@@ -3,13 +3,16 @@ import {View, Image, Text, ActivityIndicator, ScrollView} from 'react-native';
 import styles from './styles';
 import PersonalText from './../common/CustomText/index';
 import CustomeButton from './../common/CustomButton/index';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import DatePicker from './../../components/common/DatePicker/index';
 import CustomModal from './../common/Modal/index';
+import {useNavigation} from '@react-navigation/native';
+import {LOGIN, REGISTER} from '../../constants/routeNames';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Button from './../common/Button/index';
 
-const PersonalComponent = ({data, loading, onSubmit, onChange}) => {
+const PersonalComponent = ({data, loading, onSubmit, onChange, isLoggedIn}) => {
   const [date, setDate] = React.useState(
-    data.birthday ? data.birthday : 'Chọn ngày sinh',
+    data.birthday ? parseDate(data.birthday) : 'Chọn ngày sinh',
   );
   const [gender, setGender] = React.useState(
     data.gender ? data.gender : 'Chọn giới tính',
@@ -17,6 +20,7 @@ const PersonalComponent = ({data, loading, onSubmit, onChange}) => {
 
   const [isShowDatePicker, setShowDatePicker] = React.useState(false);
   const [isShowGender, setShowGender] = React.useState(false);
+  const {navigate} = useNavigation();
 
   const onChangeDate = (Date, txtDate) => {
     setDate(txtDate);
@@ -31,6 +35,17 @@ const PersonalComponent = ({data, loading, onSubmit, onChange}) => {
     setShowGender(!isShowGender);
     setGender(sex);
     onChange({name: 'gender', value: sex});
+  };
+  const btnLogin = () => {
+    navigate(LOGIN);
+  };
+  const btnSignUp = () => {
+    navigate(REGISTER);
+  };
+  const btnLogout = () => {
+    navigate(LOGIN);
+    AsyncStorage.removeItem('token');
+    AsyncStorage.removeItem('cartID');
   };
 
   const parseDate = date => {
@@ -94,7 +109,7 @@ const PersonalComponent = ({data, loading, onSubmit, onChange}) => {
 
           <PersonalText
             label="Giới Tính"
-            value={data.gender ? data.gender : gender}
+            value={gender}
             enable
             onPress={onShowGenderModal}
             editable={false}
@@ -108,7 +123,7 @@ const PersonalComponent = ({data, loading, onSubmit, onChange}) => {
 
           <PersonalText
             label="Ngày sinh"
-            value={parseDate(data.birthday)}
+            value={date}
             enable
             onPress={onPressDate}
             editable={false}
@@ -125,7 +140,7 @@ const PersonalComponent = ({data, loading, onSubmit, onChange}) => {
 
           <PersonalText
             label="Số điện thoại"
-            value={data.phone ? data.phone : 'Nhập số điện thoại'}
+            value={data.phone}
             enable
             editable={true}
             keyboardType="numeric"
@@ -153,6 +168,20 @@ const PersonalComponent = ({data, loading, onSubmit, onChange}) => {
           <View style={styles.bgBtnSave}>
             <CustomeButton title="Lưu" primary disable onSubmit={onSubmit} />
           </View>
+          {isLoggedIn ? (
+            <View style={styles.bgBtn}>
+              <View style={styles.bg}>
+                <Button title="Đăng xuất" loginColor onPress={btnLogout} />
+              </View>
+            </View>
+          ) : (
+            <View style={styles.bgBtn}>
+              <View style={styles.bg}>
+                <Button title="Đăng nhập" loginColor onPress={btnLogin} />
+                <Button title="Đăng ký" signupColor onPress={btnSignUp} />
+              </View>
+            </View>
+          )}
         </View>
       )}
     </ScrollView>

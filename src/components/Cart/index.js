@@ -12,7 +12,7 @@ import styles from './styles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
 import convertPrice from '../../constants/Reused/index';
-import {PRODUCT_DETAIL, ORDER} from './../../constants/routeNames';
+import {PRODUCT_DETAIL, ORDER, LOGIN} from './../../constants/routeNames';
 import QuantityComponent from './../common/Quantity/index';
 import {
   REMOVE_FROM_CART,
@@ -26,6 +26,7 @@ const CartComponent = ({
   productsDispatch,
   removeItemInCart,
   updateItemInCart,
+  isLogged,
 }) => {
   const navigation = useNavigation();
   const [isSelected, setSelection] = React.useState(false);
@@ -100,7 +101,9 @@ const CartComponent = ({
           <QuantityComponent
             qty={item.quantity}
             removeItemFromCart={() => {
-              removeItemInCart(item._id);
+              if (isLogged !== null) {
+                removeItemInCart(item._id);
+              }
               removeItemFromCart(item.product);
             }}
             plusCartQty={() => {
@@ -126,8 +129,10 @@ const CartComponent = ({
                 {
                   text: 'OK',
                   onPress: () => {
-                    console.log('OK Pressed');
-                    removeItemInCart(item._id);
+                    console.log('id', isLogged);
+                    if (isLogged !== null) {
+                      removeItemInCart(item._id);
+                    }
                     removeItemFromCart(item.product);
                   },
                 },
@@ -158,6 +163,20 @@ const CartComponent = ({
           />
         </View>
       )}
+
+      {!cartLoading && (
+        <View style={{height: '84%'}}>
+          <FlatList
+            renderItem={renderItem}
+            keyExtractor={(item, index) => {
+              return index.toString();
+            }}
+            data={cartData}
+            ListEmptyComponent={ListEmptyComponent}
+            // horizontal={true}
+          />
+        </View>
+      )}
       <View style={styles.containerAll}>
         <CheckBox
           value={isSelected}
@@ -172,33 +191,34 @@ const CartComponent = ({
         <TouchableOpacity
           style={styles.btnBuy}
           onPress={() => {
-            // cartData
-            //   .filter(function (eachElem, index) {
-            //     return checked[index] === true;
-            //   })
-            //   .forEach(element => {
-            //     console.log('item:', element);
-            //   });
-            navigation.navigate(ORDER, {
-              data: cartData.filter(function (eachElem, index) {
-                return checked[index] === true;
-              }),
-            });
+            if (isLogged !== null) {
+              navigation.navigate(ORDER, {
+                data: cartData.filter(function (eachElem, index) {
+                  return checked[index] === true;
+                }),
+              });
+            } else {
+              Alert.alert(
+                'Đăng nhập',
+                'Bạn cần đăng nhập để mua hàng?Nhấn Ok để đăng nhập',
+                [
+                  {
+                    text: 'Không',
+                    onPress: () => {},
+                  },
+                  {
+                    text: 'OK',
+                    onPress: () => {
+                      navigation.navigate(LOGIN);
+                    },
+                  },
+                ],
+              );
+            }
           }}>
           <Text style={styles.textBuy}>Mua hàng</Text>
         </TouchableOpacity>
       </View>
-      {!cartLoading && (
-        <FlatList
-          renderItem={renderItem}
-          keyExtractor={(item, index) => {
-            return index.toString();
-          }}
-          data={cartData}
-          ListEmptyComponent={ListEmptyComponent}
-          // horizontal={true}
-        />
-      )}
     </View>
   );
 };

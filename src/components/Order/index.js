@@ -33,8 +33,7 @@ const OrderComponent = ({
 
   const CaculateMoney = () => {
     let money = 0;
-    data.forEach(element => {
-      console.log('item', element.quantit);
+    data?.forEach(element => {
       money += parseInt(element.quantity) * parseInt(element.product.price);
     });
     return money.toString();

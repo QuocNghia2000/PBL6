@@ -3,7 +3,7 @@ import LoginComponent from '../../components/Login/index';
 import {GlobalContext} from './../../context/Provider';
 import loginUser from '../../context/actions/auth/loginUser';
 import {useNavigation} from '@react-navigation/native';
-import {REGISTER, SPLASH} from './../../constants/routeNames';
+import {SPLASH} from './../../constants/routeNames';
 
 const Login = () => {
   const [form, setForm] = useState({});
@@ -53,8 +53,6 @@ const Login = () => {
         navigate(SPLASH);
       }
     }
-    //console.log('form:>>', form);
-    // console.log('form:>>', form.password.length);
   };
   return (
     <LoginComponent

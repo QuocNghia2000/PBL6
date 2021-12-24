@@ -7,6 +7,8 @@ import personal from './reducers/personal';
 import personalInitialState from './initialsStates/personalInitialState';
 import categories from './reducers/categories';
 import categoryInitialState from './initialsStates/categoryInitialState';
+import orderInitialState from './initialsStates/orderInitialState';
+import order from './reducers/order';
 
 export const GlobalContext = createContext({});
 
@@ -24,6 +26,7 @@ const GlobalProvider = ({children}) => {
     categories,
     categoryInitialState,
   );
+  const [orderState, orderDispatch] = useReducer(order, orderInitialState);
 
   return (
     <GlobalContext.Provider
@@ -32,10 +35,12 @@ const GlobalProvider = ({children}) => {
         productsState,
         personalState,
         categoryState,
+        orderState,
         authDispatch,
         productsDispatch,
         personalDispatch,
         categoryDispatch,
+        orderDispatch,
       }}>
       {children}
     </GlobalContext.Provider>

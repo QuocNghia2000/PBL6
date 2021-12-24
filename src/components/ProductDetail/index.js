@@ -26,11 +26,13 @@ const ProductDetailComponent = ({
 
   const getAverageRate = () => {
     let rate = 0;
-    fbData.forEach(element => {
+    fbData?.forEach(element => {
       rate += parseInt(element.rate);
     });
     return rate;
   };
+  console.log('length:', parseInt(getAverageRate() / parseInt(fbData.length)));
+
   return (
     <View>
       <StatusBar translucent backgroundColor="transparent" />
@@ -98,22 +100,21 @@ const ProductDetailComponent = ({
           <View>
             <View>
               <View style={styles.txtTitleContainer}>
-                <Text style={styles.txtTitleDes}>
-                  Đánh giá sản phẩm {getAverageRate().count}
-                </Text>
-                {Array(parseInt(getAverageRate() / 2))
-                  ?.fill(1)
-                  .map((rates, is) => (
-                    <Ionicons
-                      key={is}
-                      name="md-star-sharp"
-                      style={[
-                        styles.userIcon,
-                        {color: '#ff8d1c', marginLeft: 5},
-                      ]}
-                    />
-                  ))}
-                {getAverageRate() % 2 > 0 && (
+                <Text style={styles.txtTitleDes}>Đánh giá sản phẩm:</Text>
+                {fbData.length > 0 &&
+                  Array(parseInt(getAverageRate() / parseInt(fbData.length)))
+                    ?.fill(1)
+                    .map((rates, is) => (
+                      <Ionicons
+                        key={is}
+                        name="md-star-sharp"
+                        style={[
+                          styles.userIcon,
+                          {color: '#ff8d1c', marginLeft: 5},
+                        ]}
+                      />
+                    ))}
+                {getAverageRate() % fbData.length > 0 && (
                   <Ionicons
                     name="star-half-sharp"
                     style={[styles.userIcon, {color: '#ff8d1c', marginLeft: 5}]}

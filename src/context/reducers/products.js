@@ -206,7 +206,6 @@ const products = (state, {type, payload}) => {
       return {
         ...state,
         postOrder: {
-          ...state.postOrder,
           loading: false,
           data: payload,
         },

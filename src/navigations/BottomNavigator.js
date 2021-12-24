@@ -1,18 +1,16 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import HomeScreen from './../screens/HomeScreen/index';
 import Personal from './../screens/Personal/index';
-import Settings from './../screens/Settings/index';
+import History from './../screens/History/index';
 import {
   HOME_NAVIGATOR,
-  SETTINGS,
+  HISTORY,
   PERSONAL,
   CART,
 } from './../constants/routeNames';
 import Cart from './../screens/Cart/index';
 import TabBarIcon from './../components/common/TabBarIcon/index';
 import HomeNavigator from './HomeNavigator';
-import AuthNavigator from './AuthNavigator';
 
 const Tab = createBottomTabNavigator();
 const BottomNavigator = () => {
@@ -45,12 +43,15 @@ const BottomNavigator = () => {
         }}
       />
       <Tab.Screen
-        name={SETTINGS}
-        component={Settings}
+        name={HISTORY}
+        component={History}
         options={{
           tabBarIcon: ({color, size}) => (
-            <TabBarIcon name="settings-outline" color={color} size={size} />
+            <TabBarIcon name="history" color={color} size={size} type />
           ),
+        }}
+        onPress={() => {
+          console.log('okáds');
         }}
       />
       <Tab.Screen

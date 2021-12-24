@@ -7,7 +7,9 @@ import {
   ActivityIndicator,
   StatusBar,
   ScrollView,
+  ToastAndroid,
 } from 'react-native';
+
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {
@@ -20,6 +22,7 @@ import SearchBar from './../../components/common/SearchBar/index';
 import convertPrice from '../../constants/Reused/index';
 import CustomFlatList from './../common/FlatList/index';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   ADD_TO_CART,
   UPDATE_CART_QTY,
@@ -35,17 +38,11 @@ const HomeScreenComponent = ({
   cartData,
   addCart,
   updateItemInCart,
+  isLogged,
 }) => {
   //console.log('data: ', data);
   const navigation = useNavigation();
 
-  // const ListEmptyComponent = () => {
-  //   return (
-  //     <View style={styles.positionCenter}>
-  //       <Text>No items to show</Text>
-  //     </View>
-  //   );
-  // };
   const gotoSearchScreen = () => {
     navigation.navigate(SEARCH, {
       data: data,
@@ -160,7 +157,7 @@ const HomeScreenComponent = ({
               <View style={styles.bgRight}>
                 <Text style={styles.textName}>{item.name}</Text>
                 <Text style={styles.textPrice}>
-                  {convertPrice(item.price.toString())} đ
+                  {convertPrice(item?.price.toString())} đ
                 </Text>
               </View>
               <TouchableOpacity style={styles.cartIconContainer}>
@@ -171,7 +168,6 @@ const HomeScreenComponent = ({
                     const existItem = cartData.filter(
                       p => p.product._id === item._id,
                     );
-                    console.log('existItem:', existItem.length);
                     if (existItem.length > 0) {
                       productsDispatch({
                         type: UPDATE_CART_QTY,
@@ -180,14 +176,38 @@ const HomeScreenComponent = ({
                           qty: ++existItem[0].quantity,
                         },
                       });
-                      updateItemInCart(existItem[0]._id, existItem[0].quantity);
+                      if (isLogged) {
+                        updateItemInCart(
+                          existItem[0]._id,
+                          existItem[0].quantity,
+                        );
+                      } else {
+                        ToastAndroid.show(
+                          'Cập nhật số lượng vào giỏ thành công',
+                          ToastAndroid.SHORT,
+                        );
+                      }
                     } else {
+                      console.log('isLogged', isLogged);
                       productsDispatch({
                         type: ADD_TO_CART,
                         payload: item,
                       });
-                      console.log('itemadd:', item);
-                      addCart(item._id, '1');
+                      cartData.forEach(element => {
+                        console.log('cartID:', element.product.name);
+                      });
+                      if (isLogged) {
+                        addCart(item._id, '1');
+                      } else {
+                        ToastAndroid.show(
+                          'Thêm vào giỏ thành công',
+                          ToastAndroid.SHORT,
+                        );
+                        // AsyncStorage.setItem(
+                        //   'cartData',
+                        //   JSON.stringify(cartData),
+                        // );
+                      }
                     }
                   }}
                 />

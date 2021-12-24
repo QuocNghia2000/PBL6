@@ -1,7 +1,7 @@
 export const HOME_SCREEN = 'Home Screen';
 export const PRODUCT_DETAIL = 'PRODUCT_DETAIL';
 export const CREATE_CONTACT = 'CreateContact';
-export const SETTINGS = 'Settings';
+export const HISTORY = 'History';
 export const HOME_NAVIGATOR = 'Home';
 export const LOGIN = 'Login';
 export const REGISTER = 'Register';
@@ -14,3 +14,4 @@ export const AUTH_NAVIGATOR = 'Auth';
 export const SHOP_DETAIL = 'Shop Detail';
 export const CATEGORY_DETAIL = 'Category Detail';
 export const ORDER = 'Thanh toán';
+export const FEEDBACK = 'Đánh giá';

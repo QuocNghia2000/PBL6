@@ -20,6 +20,8 @@ import Register from './../screens/Register/index';
 import ShopDetail from './../screens/ShopDetail/index';
 import CategoryDetail from './../screens/CategoryDetail/index';
 import OrderScreen from './../screens/Order/index';
+import {FEEDBACK} from './../constants/routeNames';
+import FeedbackScreen from './../screens/Feedback/index';
 
 const SplashNavigator = () => {
   const SplashStack = createNativeStackNavigator();
@@ -38,6 +40,7 @@ const SplashNavigator = () => {
       <SplashStack.Screen name={SHOP_DETAIL} component={ShopDetail} />
       <SplashStack.Screen name={CATEGORY_DETAIL} component={CategoryDetail} />
       <SplashStack.Screen name={ORDER} component={OrderScreen} />
+      <SplashStack.Screen name={FEEDBACK} component={FeedbackScreen} />
     </SplashStack.Navigator>
   );
 };

@@ -1,6 +1,7 @@
 export default {
   isLoggedIn: false,
-  id: {},
+  id: null,
+  cartId: null,
   error: null,
   loading: false,
 };
