@@ -181,12 +181,11 @@ const HomeScreenComponent = ({
                           existItem[0]._id,
                           existItem[0].quantity,
                         );
-                      } else {
-                        ToastAndroid.show(
-                          'Cập nhật số lượng vào giỏ thành công',
-                          ToastAndroid.SHORT,
-                        );
                       }
+                      ToastAndroid.show(
+                        'Cập nhật số lượng vào giỏ thành công',
+                        ToastAndroid.SHORT,
+                      );
                     } else {
                       console.log('isLogged', isLogged);
                       productsDispatch({
@@ -196,16 +195,11 @@ const HomeScreenComponent = ({
                       if (isLogged) {
                         console.log('add server');
                         addCart(item._id, '1');
-                      } else {
-                        ToastAndroid.show(
-                          'Thêm vào giỏ thành công',
-                          ToastAndroid.SHORT,
-                        );
-                        // AsyncStorage.setItem(
-                        //   'cartData',
-                        //   JSON.stringify(cartData),
-                        // );
                       }
+                      ToastAndroid.show(
+                        'Thêm vào giỏ thành công',
+                        ToastAndroid.SHORT,
+                      );
                     }
                   }}
                 />

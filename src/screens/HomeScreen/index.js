@@ -9,6 +9,8 @@ import getInfo from '../../context/actions/personal/getInfo';
 import addItemCart from '../../context/actions/home/addCart';
 import {ToastAndroid} from 'react-native';
 import updateItemCart from '../../context/actions/home/updateItemCart';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {decode as atob} from 'base-64';
 
 const HomeScreen = () => {
   const [isLogged, setLoggedIn] = React.useState(false);
@@ -22,9 +24,9 @@ const HomeScreen = () => {
     },
   } = useContext(GlobalContext);
 
-  const {
-    authState: {id, cartId},
-  } = useContext(GlobalContext);
+  // const {
+  //   authState: {id, cartId},
+  // } = useContext(GlobalContext);
   const {
     personalDispatch,
     personalState: {
@@ -38,17 +40,23 @@ const HomeScreen = () => {
     },
   } = useContext(GlobalContext);
 
-  const getCartAndInfo = () => {
-    console.log('id:', id);
-    if (cartId !== null && id !== null) {
+  const getCartAndInfo = async () => {
+    const cartId = await AsyncStorage.getItem('cartID');
+    const token = await AsyncStorage.getItem('token');
+    if (cartId !== null && token !== null) {
+      const id = JSON.parse(atob(token.toString().split('.')[1])).id;
+      console.log('id:', cartId + ':::' + id);
+
       setLoggedIn(true);
       getInfo(id)(personalDispatch);
       getCart(cartId)(productsDispatch);
     }
   };
-  const addCart = (productId, quantity) => {
+  const addCart = async (productId, quantity) => {
+    const cartId = await AsyncStorage.getItem('cartID');
+
     if (cartId !== null) {
-      console.log('carrtID:', productId + ':/' + quantity);
+      // console.log('carrtID:', productId + ':/' + quantity);
       addItemCart(cartId, productId, quantity);
       ToastAndroid.show('Thêm vào giỏ thành công', ToastAndroid.SHORT);
     }

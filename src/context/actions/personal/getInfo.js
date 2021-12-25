@@ -7,6 +7,7 @@ import {
 import axios from '../../../constants/axiosInstance/index';
 // '6193752a82428adfd4e4278f'
 export default id => dispatch => {
+  console.log('đsd', id);
   dispatch({
     type: GET_INFO_LOADING,
   });
@@ -15,7 +16,7 @@ export default id => dispatch => {
 
     .then(response => {
       // handle success
-      //console.log('INFOR: ', response.data);
+      console.log('INFOR: ', response.data);
 
       dispatch({type: GET_INFO_SUCCESS, payload: response.data});
     })
